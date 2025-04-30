@@ -19,6 +19,7 @@ public class AuthController {
 
     private final JwtUtil jwtUtil;
 
+    @PostMapping("/login")
     public ResponseEntity<AuthResponse> login(
             @RequestBody AuthRequest request,
             HttpServletResponse response) {
@@ -33,6 +34,7 @@ public class AuthController {
         ResponseCookie cookie = ResponseCookie
                 .from("refreshToken", refreshToken)
                 .httpOnly(true)
+                .secure(true)
                 .path("api/v1/auth/refresh")
                 .sameSite("None")
                 .maxAge(Duration.ofDays(7))
@@ -61,6 +63,7 @@ public class AuthController {
         ResponseCookie cookie = ResponseCookie
                 .from("refreshToken", "")
                 .httpOnly(true)
+                .secure(true)
                 .path("api/v1/auth/refresh")
                 .sameSite("None")
                 .maxAge(0)
